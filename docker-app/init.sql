@@ -1,0 +1,13 @@
+CREATE SCHEMA IF NOT EXISTS tennis
+
+CREATE TABLE IF NOT EXISTS tennis.players(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL
+)
+
+CREATE TABLE IF NOT EXISTS tennis.matches(
+    id SERIAL PRIMARY KEY,
+    player1 INT REFERENCES tennis.players(id) ON DELETE CASCADE,
+    player2 INT REFERENCES tennis.players(id) ON DELETE CASCADE,
+    winner INT REFERENCES tennis.players(id) ON DELETE CASCADE
+)
