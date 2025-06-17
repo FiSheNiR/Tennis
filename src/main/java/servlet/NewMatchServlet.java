@@ -11,7 +11,7 @@ import service.OngoingMatchesService;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet("/new-match")
+@WebServlet(name = "NewMatchServlet", urlPatterns = "/new-match")
 public class NewMatchServlet extends HttpServlet {
 
     private OngoingMatchesService ongoingMatchesService;
@@ -24,6 +24,6 @@ public class NewMatchServlet extends HttpServlet {
         NewMatchRequestDto newMatchRequestDto = new NewMatchRequestDto(player1, player2);
         UUID uuid = ongoingMatchesService.createMatch(newMatchRequestDto);
 
-        response.sendRedirect("/match-score?uuid=" + uuid);
+        response.sendRedirect("/match-score?uuid=" + uuid.toString());
     }
 }

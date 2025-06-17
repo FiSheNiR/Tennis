@@ -17,7 +17,10 @@ public class PlayerDao {
                     .setParameter("name", name)
                             .getResultList();
             session.getTransaction().commit();
-            return players.isEmpty() ? Optional.empty() : Optional.of(players.get(0));
+            return players.isEmpty() ? Optional.empty() : Optional.of(players.getFirst());
+        } catch (Exception e) {
+            throw new DatabaseException("Cant find player with name " + name
+                    + " in database " + e.getMessage());
         }
     }
 
