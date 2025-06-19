@@ -27,7 +27,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         matchScoreCalculationService.pointWon(playerId);
 
-        if (matchScoreCalculationService.isGameOver()){
+        if (matchScoreCalculationService.isMatchFinished()){
             //TODO Отдаем закончеенный матч
         }
     }

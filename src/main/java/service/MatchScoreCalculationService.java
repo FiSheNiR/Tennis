@@ -11,13 +11,14 @@ public class MatchScoreCalculationService {
     private static final int DIFFERENCE_BETWEEN_POINTS_TO_WIN = 2;
     private static final int DIFFERENCE_BETWEEN_GAMES_TO_WIN = 2;
     private static final int POINTS_TO_WIN_GAME = 4;
+    private static final int POINTS_TO_WIN_TIEBREAK = 7;
 
     CurrentMatch currentMatch;
 
 
 
     public void pointWon(int pointWinnerId){
-        if (isGameOver()){
+        if (isMatchFinished()){
             return;
         }
         if(pointWinnerId == 1){
@@ -25,26 +26,44 @@ public class MatchScoreCalculationService {
         } else if(pointWinnerId == 2){
             currentMatch.getPlayer2Score().addPointWins();
         }
-        updateGameScore();
+        if (isTiebreak()) {
+            updateGameScore(POINTS_TO_WIN_TIEBREAK);
+        } else {
+            updateGameScore(POINTS_TO_WIN_GAME);
+        }
         updateSetScore();
     }
 
-    public boolean isGameOver(){
+
+    public boolean isMatchFinished(){
         return currentMatch.getPlayer1Score().getSetWins() == SETS_TO_WIN_MATCH
                 || currentMatch.getPlayer2Score().getSetWins() == SETS_TO_WIN_MATCH;
     }
 
-    private void updateGameScore(){
-        if (currentMatch.getPlayer1Score().getGameWins() >= POINTS_TO_WIN_GAME
+    public boolean isTiebreak(){
+        return currentMatch.getPlayer1Score().getGameWins() == GAMES_TO_WIN_SET
+                && currentMatch.getPlayer2Score().getGameWins() == GAMES_TO_WIN_SET;
+    }
+
+    private void updateGameScore(int numberOfPointsToWin){
+        if (currentMatch.getPlayer1Score().getPointWins() >= numberOfPointsToWin
                 && currentMatch.getPlayer1Score().getPointWins() - DIFFERENCE_BETWEEN_POINTS_TO_WIN
                 >= currentMatch.getPlayer2Score().getPointWins()){
-            currentMatch.getPlayer1Score().addGameWins();
+            if (isTiebreak()){
+                currentMatch.getPlayer1Score().addSetWins();
+            } else {
+                currentMatch.getPlayer1Score().addGameWins();
+            }
             resetPointsScore();
         }
-        if (currentMatch.getPlayer2Score().getGameWins() >= POINTS_TO_WIN_GAME
+        if (currentMatch.getPlayer2Score().getPointWins() >= numberOfPointsToWin
                 && currentMatch.getPlayer2Score().getPointWins() - DIFFERENCE_BETWEEN_POINTS_TO_WIN
                 >= currentMatch.getPlayer1Score().getPointWins()){
-            currentMatch.getPlayer1Score().addGameWins();
+            if (isTiebreak()){
+                currentMatch.getPlayer2Score().addSetWins();
+            } else {
+                currentMatch.getPlayer2Score().addGameWins();
+            }
             resetPointsScore();
         }
     }

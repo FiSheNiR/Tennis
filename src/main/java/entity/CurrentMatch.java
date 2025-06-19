@@ -1,8 +1,6 @@
 package entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import service.Score;
 
 import java.util.UUID;
@@ -10,6 +8,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CurrentMatch {
 
