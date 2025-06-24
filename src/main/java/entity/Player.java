@@ -15,7 +15,11 @@ import lombok.Setter;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    public Player(String name) {
+        this.name = name;
+    }
 }

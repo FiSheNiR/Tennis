@@ -15,7 +15,7 @@ import lombok.Setter;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "player1", referencedColumnName = "id")
     private Player player1;

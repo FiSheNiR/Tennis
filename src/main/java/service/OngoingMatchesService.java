@@ -14,9 +14,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class OngoingMatchesService {
 
-    private PlayerDao playerDao;
+    private static final OngoingMatchesService INSTANCE = new OngoingMatchesService();
+
+    private final PlayerDao playerDao = new PlayerDao();
 
     private final Map<UUID, CurrentMatch> currentMatches = new ConcurrentHashMap<>();
+
+    public static OngoingMatchesService getInstance() {
+        return INSTANCE;
+    }
 
     public UUID createMatch(NewMatchRequestDto newMatchRequestDto) {
         UUID uuid = UUID.randomUUID();
@@ -35,8 +41,12 @@ public class OngoingMatchesService {
         return currentMatches.get(uuid);
     }
 
+    public void removeMatch(UUID uuid) {
+        currentMatches.remove(uuid);
+    }
+
     public Player getOrCreatePlayer(String playerName) {
         Optional<Player> playerOptional = playerDao.getPlayerByName(playerName);
-        return playerOptional.orElseGet(() -> playerDao.savePlayer(new Player(null, playerName)));
+        return playerOptional.orElseGet(() -> playerDao.savePlayer(new Player(playerName)));
     }
 }

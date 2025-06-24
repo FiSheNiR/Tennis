@@ -1,6 +1,7 @@
 package service;
 
 import entity.CurrentMatch;
+import entity.Player;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -38,6 +39,14 @@ public class MatchScoreCalculationService {
     public boolean isMatchFinished(){
         return currentMatch.getPlayer1Score().getSetWins() == SETS_TO_WIN_MATCH
                 || currentMatch.getPlayer2Score().getSetWins() == SETS_TO_WIN_MATCH;
+    }
+
+    public Player getMatchWinner(){
+        if (currentMatch.getPlayer1Score().getSetWins() == SETS_TO_WIN_MATCH){
+            return currentMatch.getPlayer1();
+        } else {
+            return currentMatch.getPlayer2();
+        }
     }
 
     public boolean isTiebreak(){
@@ -94,13 +103,7 @@ public class MatchScoreCalculationService {
         currentMatch.getPlayer2Score().resetPoints();
     }
 
-    private int getMatchWinner(){
-        if (currentMatch.getPlayer1Score().getSetWins() == SETS_TO_WIN_MATCH){
-            return currentMatch.getPlayer1().getId();
-        } else {
-            return currentMatch.getPlayer2().getId();
-        }
-    }
+
 
 
 }

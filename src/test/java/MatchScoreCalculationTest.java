@@ -16,8 +16,8 @@ public class MatchScoreCalculationTest {
     @BeforeEach
     void setUp() {
         // Подготовка объектов перед каждым тестом
-        Player player1 = new Player(1, "Bob");
-        Player player2 = new Player(2, "John");
+        Player player1 = new Player("Bob");
+        Player player2 = new Player("John");
         Score score1 = new Score();
         Score score2 = new Score();
         UUID uuid = UUID.randomUUID();

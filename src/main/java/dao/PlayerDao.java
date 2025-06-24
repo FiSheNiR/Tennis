@@ -9,15 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlayerDao {
+
+    private static final String FIND_PLAYER_BY_NAME = "from Player where name = :name";
+
     public Optional<Player> getPlayerByName(String name) {
         try (Session session = HibernateUtil.getSession()) {
-            session.beginTransaction();
-            List<Player> players =
-                    session.createSelectionQuery("from Player where name = :name", Player.class)
+            Player player = session.createSelectionQuery(FIND_PLAYER_BY_NAME, Player.class)
                     .setParameter("name", name)
-                            .getResultList();
-            session.getTransaction().commit();
-            return players.isEmpty() ? Optional.empty() : Optional.of(players.getFirst());
+                    .setMaxResults(1)
+                    .uniqueResult();
+            return Optional.ofNullable(player);
+
         } catch (Exception e) {
             throw new DatabaseException("Cant find player with name " + name
                     + " in database " + e.getMessage());

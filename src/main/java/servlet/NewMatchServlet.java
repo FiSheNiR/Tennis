@@ -14,7 +14,12 @@ import java.util.UUID;
 @WebServlet(name = "NewMatchServlet", urlPatterns = "/new-match")
 public class NewMatchServlet extends HttpServlet {
 
-    private OngoingMatchesService ongoingMatchesService;
+    private final OngoingMatchesService ongoingMatchesService = OngoingMatchesService.getInstance();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/new-match.jsp").forward(request,response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,6 +29,6 @@ public class NewMatchServlet extends HttpServlet {
         NewMatchRequestDto newMatchRequestDto = new NewMatchRequestDto(player1, player2);
         UUID uuid = ongoingMatchesService.createMatch(newMatchRequestDto);
 
-        response.sendRedirect("/match-score?uuid=" + uuid.toString());
+        response.sendRedirect( request.getContextPath() + "/match-score?uuid=" + uuid.toString());
     }
 }
