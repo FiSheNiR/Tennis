@@ -5,9 +5,22 @@ import entity.CurrentMatch;
 import entity.Match;
 import entity.Player;
 
+import java.util.List;
+
 public class FinishedMatchesPersistenceService {
 
     private final MatchDao matchDao = new MatchDao();
+    private static final int PAGE_SIZE = 5;
+
+    public List<Match> getFinishedMatches(String playerName, int page) {
+        List<Match> matches;
+        if (playerName == null || playerName.isEmpty()) {
+            matches = matchDao.findAllMatches(page, PAGE_SIZE);
+        } else {
+            matches = matchDao.findAllMatchesByPlayerName(playerName, page, PAGE_SIZE);
+        }
+        return matches;
+    }
 
     public void saveMatch(CurrentMatch currentMatch, Player winner) {
         Match match = convertCurrentMatchToEntity(currentMatch, winner);

@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,7 @@
     <section class="nav-header">
         <div class="brand">
             <div class="nav-toggle">
-                <img src="images/menu.png" alt="Logo" class="logo">
+                <img src="${pageContext.request.contextPath}/images/menu.jpg" alt="Logo" class="logo">
             </div>
             <span class="logo-text">TennisScoreboard</span>
         </div>
@@ -35,53 +37,55 @@
     <div class="container">
         <h1>Matches</h1>
         <div class="input-container">
-            <input class="input-filter" placeholder="Filter by name" type="text" />
+            <form action="${pageContext.request.contextPath}/matches" method="GET">
+                <label for="filter">Filter by name</label>
+                <input class="input-filter" type="text" placeholder="Player name" name="filter_by_player_name" id="filter">
+            </form>
+
             <div>
-                <a href="#">
+                <a href="${pageContext.request.contextPath}/matches">
                     <button class="btn-filter">Reset Filter</button>
                 </a>
             </div>
         </div>
-
         <table class="table-matches">
             <tr>
                 <th>Player One</th>
                 <th>Player Two</th>
                 <th>Winner</th>
             </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
+
+            <c:forEach items="${requestScope.matches}" var="match">
+                <tr>
+                    <td>${match.player1.name}</td>
+                    <td>${match.player2.name}</td>
+                    <td><span class="winner-name-td">${match.winner.name}</span></td>
+                </tr>
+            </c:forEach>
+
         </table>
 
+        <c:set var="page" value="${empty param.page ? 1 : Integer.parseInt(param.page)}"/>
+        <c:set var="filterName" value="${param.filter_by_player_name}"/>
+
         <div class="pagination">
-            <a class="prev" href="#"> < </a>
-            <a class="num-page current" href="#">1</a>
-            <a class="num-page" href="#">2</a>
-            <a class="num-page" href="#">3</a>
-            <a class="next" href="#"> > </a>
+            <c:if test="${page > 1}">
+                <c:url var="prevUrl" value="/matches">
+                    <c:param name="page" value="${page - 1}"/>
+                    <c:if test="${not empty filterName}">
+                        <c:param name="filter_by_player_name" value="${filterName}"/>
+                    </c:if>
+                </c:url>
+                <a class="prev" href="${prevUrl}">< Назад</a>
+            </c:if>
+
+            <c:url var="nextUrl" value="/matches">
+                <c:param name="page" value="${page + 1}"/>
+                <c:if test="${not empty filterName}">
+                    <c:param name="filter_by_player_name" value="${filterName}"/>
+                </c:if>
+            </c:url>
+            <a class="next" href="${nextUrl}">Вперед ></a>
         </div>
     </div>
 </main>

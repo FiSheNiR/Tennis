@@ -19,7 +19,7 @@
     <section class="nav-header">
         <div class="brand">
             <div class="nav-toggle">
-                <img src="${pageContext.request.contextPath}/images/menu.png" alt="Logo" class="logo">
+                <img src="${pageContext.request.contextPath}/images/menu.jpg" alt="Logo" class="logo">
             </div>
             <span class="logo-text">TennisScoreboard</span>
         </div>
@@ -42,7 +42,7 @@
                     Start a new match
                 </button>
             </a>
-            <a class="homepage-action-button" href="#">
+            <a class="homepage-action-button" href="${pageContext.request.contextPath}/matches">
                 <button class="btn view-results">
                     View match results
                 </button>
