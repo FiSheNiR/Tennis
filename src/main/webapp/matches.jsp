@@ -37,9 +37,8 @@
     <div class="container">
         <h1>Matches</h1>
         <div class="input-container">
-            <form action="${pageContext.request.contextPath}/matches" method="GET">
-                <label for="filter">Filter by name</label>
-                <input class="input-filter" type="text" placeholder="Player name" name="filter_by_player_name" id="filter">
+            <form class="input-filter" action="${pageContext.request.contextPath}/matches" method="GET">
+                <input type="text" placeholder="Filter by name" name="filter_by_player_name" id="filter">
             </form>
 
             <div>
@@ -79,13 +78,15 @@
                 <a class="prev" href="${prevUrl}">< Назад</a>
             </c:if>
 
-            <c:url var="nextUrl" value="/matches">
-                <c:param name="page" value="${page + 1}"/>
-                <c:if test="${not empty filterName}">
-                    <c:param name="filter_by_player_name" value="${filterName}"/>
-                </c:if>
-            </c:url>
-            <a class="next" href="${nextUrl}">Вперед ></a>
+            <c:if test="${requestScope.hasNextPage}">
+                <c:url var="nextUrl" value="/matches">
+                    <c:param name="page" value="${page + 1}"/>
+                    <c:if test="${not empty filterName}">
+                        <c:param name="filter_by_player_name" value="${filterName}"/>
+                    </c:if>
+                </c:url>
+                <a class="next" href="${nextUrl}">Вперед ></a>
+            </c:if>
         </div>
     </div>
 </main>

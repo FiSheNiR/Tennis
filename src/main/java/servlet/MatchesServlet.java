@@ -1,7 +1,6 @@
 package servlet;
 
 import entity.Match;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +15,7 @@ import java.util.List;
 @WebServlet(name = "MatchesServlet", urlPatterns = "/matches")
 public class MatchesServlet extends HttpServlet {
 
-    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
+    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService = FinishedMatchesPersistenceService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,6 +23,15 @@ public class MatchesServlet extends HttpServlet {
         int page = ValidationUtils.validatePage(request.getParameter("page"));
 
         List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(playerName, page);
+
+        if (matches.isEmpty()) {
+            request.setAttribute("hasNextPage", false);
+        } else if (matches.size() < finishedMatchesPersistenceService.getPageSize()) {
+            request.setAttribute("hasNextPage", false);
+        } else {
+            request.setAttribute("hasNextPage", true);
+        }
+
         request.setAttribute("matches", matches);
         request.getRequestDispatcher("/matches.jsp").forward(request,response);
     }

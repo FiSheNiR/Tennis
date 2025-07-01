@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
+@Builder
 @Table(name = "players")
 public class Player {
     @Id
@@ -16,8 +17,4 @@ public class Player {
     private Long id;
     @Column(name = "name", unique = true, nullable = false)
     private String name;
-
-    public Player(String name) {
-        this.name = name;
-    }
 }

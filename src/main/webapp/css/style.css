@@ -441,7 +441,23 @@ footer {
     padding-bottom: 12px;
     padding-top: 12px;
     color: #000;
+
+    /* Добавляем display flex или grid, чтобы элементы внутри были на одной строке */
+    display: flex;
+    align-items: center;
 }
+
+.input-filter input[type="text"] {
+    background-color: transparent; /* Прозрачный фон, чтобы просвечивался фон формы */
+    border: none; /* Убираем рамку */
+    outline: none; /* Убираем фокус-обводку при клике */
+    width: 100%; /* Занимает всё доступное пространство */
+    font-size: 16px;
+    color: #000;
+    padding: 0; /* Убираем внутренние отступы, если они мешают */
+    margin: 0;
+}
+
 
 .table-matches {
     margin-top: 40px;

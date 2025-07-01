@@ -47,6 +47,6 @@ public class OngoingMatchesService {
 
     public Player getOrCreatePlayer(String playerName) {
         Optional<Player> playerOptional = playerDao.getPlayerByName(playerName);
-        return playerOptional.orElseGet(() -> playerDao.savePlayer(new Player(playerName)));
+        return playerOptional.orElseGet(() -> playerDao.savePlayer(Player.builder().name(playerName).build()));
     }
 }

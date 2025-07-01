@@ -9,8 +9,18 @@ import java.util.List;
 
 public class FinishedMatchesPersistenceService {
 
+
+    private static final FinishedMatchesPersistenceService INSTANCE = new FinishedMatchesPersistenceService();
     private final MatchDao matchDao = new MatchDao();
-    private static final int PAGE_SIZE = 5;
+    private final int PAGE_SIZE = 5;
+
+    public static FinishedMatchesPersistenceService getInstance() {
+        return INSTANCE;
+    }
+
+    public int getPageSize() {
+        return PAGE_SIZE;
+    }
 
     public List<Match> getFinishedMatches(String playerName, int page) {
         List<Match> matches;

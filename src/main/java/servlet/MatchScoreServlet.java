@@ -18,7 +18,7 @@ import java.util.UUID;
 public class MatchScoreServlet extends HttpServlet {
 
     private final OngoingMatchesService ongoingMatchesService = OngoingMatchesService.getInstance();
-    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService = new FinishedMatchesPersistenceService();
+    private final FinishedMatchesPersistenceService finishedMatchesPersistenceService = FinishedMatchesPersistenceService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,8 +41,9 @@ public class MatchScoreServlet extends HttpServlet {
         if (matchScoreCalculationService.isMatchFinished()){
             Player winner = matchScoreCalculationService.getMatchWinner();
             finishedMatchesPersistenceService.saveMatch(currentMatch, winner);
-            ongoingMatchesService.removeMatch(uuid);
             resp.sendRedirect( req.getContextPath() + "/");
+            ongoingMatchesService.removeMatch(uuid);
+            return;
         }
 
         resp.sendRedirect( req.getContextPath() + "/match-score?uuid=" + uuid.toString());
