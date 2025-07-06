@@ -1,4 +1,4 @@
-# Tennis Match ScoreBoard
+# Tennis Match Scoreboard
 
 Веб-приложение для симуляции и отслеживания теннисных матчей. Приложение позволяет:
 
