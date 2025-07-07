@@ -11,7 +11,7 @@ public class MatchScoreCalculationService {
     private static final int GAMES_TO_WIN_SET = 6;
     private static final int DIFFERENCE_BETWEEN_POINTS_TO_WIN = 2;
     private static final int DIFFERENCE_BETWEEN_GAMES_TO_WIN = 2;
-    private static final int POINTS_TO_WIN_GAME = 4;
+    private static final int POINTS_TO_WIN_GAME = 3;
     private static final int POINTS_TO_WIN_TIEBREAK = 7;
 
     CurrentMatch currentMatch;
@@ -27,6 +27,9 @@ public class MatchScoreCalculationService {
         } else if(pointWinnerId == 2){
             currentMatch.getPlayer2Score().addPointWins();
         }
+        if (isPointsTieBreak()){
+            addBothPlayerPoints();
+        }
         if (isTiebreak()) {
             updateGameScore(POINTS_TO_WIN_TIEBREAK);
         } else {
@@ -35,6 +38,10 @@ public class MatchScoreCalculationService {
         updateSetScore();
     }
 
+    private void addBothPlayerPoints(){
+        currentMatch.getPlayer1Score().addPointWins();
+        currentMatch.getPlayer2Score().addPointWins();
+    }
 
     public boolean isMatchFinished(){
         return currentMatch.getPlayer1Score().getSetWins() == SETS_TO_WIN_MATCH
@@ -101,6 +108,15 @@ public class MatchScoreCalculationService {
     private void resetPointsScore(){
         currentMatch.getPlayer1Score().resetPoints();
         currentMatch.getPlayer2Score().resetPoints();
+    }
+
+    private boolean isPointsTieBreak(){
+        if (currentMatch.getPlayer1Score().getPointWins() == POINTS_TO_WIN_GAME
+                && currentMatch.getPlayer2Score().getPointWins() == POINTS_TO_WIN_GAME){
+        return true;
+        } else return currentMatch.getPlayer1Score().getPointWins() > POINTS_TO_WIN_GAME
+                && currentMatch.getPlayer2Score().getPointWins() > POINTS_TO_WIN_GAME &&
+                currentMatch.getPlayer2Score().getPointWins() == currentMatch.getPlayer1Score().getPointWins();
     }
 
 

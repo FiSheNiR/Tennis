@@ -1,7 +1,6 @@
 package entity;
 
 import lombok.*;
-import service.Score;
 
 import java.util.UUID;
 

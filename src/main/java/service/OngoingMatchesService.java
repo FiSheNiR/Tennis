@@ -3,10 +3,9 @@ package service;
 import dao.PlayerDao;
 import dto.NewMatchRequestDto;
 import entity.CurrentMatch;
-import entity.Match;
 import entity.Player;
+import entity.Score;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;

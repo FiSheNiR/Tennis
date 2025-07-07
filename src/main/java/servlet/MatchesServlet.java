@@ -25,7 +25,8 @@ public class MatchesServlet extends HttpServlet {
         List<Match> matches = finishedMatchesPersistenceService.getFinishedMatches(playerName, page);
 
         if (matches.isEmpty()) {
-            request.setAttribute("hasNextPage", false);
+            response.sendRedirect(request.getContextPath() + "/error-page.jsp");
+            return;
         } else if (matches.size() < finishedMatchesPersistenceService.getPageSize()) {
             request.setAttribute("hasNextPage", false);
         } else {

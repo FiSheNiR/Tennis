@@ -2,7 +2,7 @@ import entity.CurrentMatch;
 import entity.Player;
 import org.junit.jupiter.api.*;
 import service.MatchScoreCalculationService;
-import service.Score;
+import entity.Score;
 
 import java.util.UUID;
 

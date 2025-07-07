@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +53,7 @@
                     <td class="table-text">${requestScope.currentMatch.player1.name}</td>
                     <td class="table-text">${requestScope.currentMatch.player1Score.setWins}</td>
                     <td class="table-text">${requestScope.currentMatch.player1Score.gameWins}</td>
-                    <td class="table-text">${requestScope.currentMatch.player1Score.pointWins}</td>
+                    <td class="table-text">${requestScope.currentMatch.player1Score.points}</td>
                     <td class="table-text">
                         <form  action="${pageContext.request.contextPath}/match-score?uuid=${requestScope.currentMatch.uuid}" method="post">
                             <input type="hidden" name="playerId" value="1">
@@ -65,7 +65,7 @@
                     <td class="table-text">${requestScope.currentMatch.player2.name}</td>
                     <td class="table-text">${requestScope.currentMatch.player2Score.setWins}</td>
                     <td class="table-text">${requestScope.currentMatch.player2Score.gameWins}</td>
-                    <td class="table-text">${requestScope.currentMatch.player2Score.pointWins}</td>
+                    <td class="table-text">${requestScope.currentMatch.player2Score.points}</td>
                     <td class="table-text">
                         <form  action="${pageContext.request.contextPath}/match-score?uuid=${requestScope.currentMatch.uuid}" method="post">
                             <input type="hidden" name="playerId" value="2">
